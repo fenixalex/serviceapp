@@ -28,7 +28,7 @@ class TestUserService(BaseTestCase):
 
 
     def test_add_user(self):
-        """Ensure a new user can be added to the database."""
+        """Asegurando que un nuevo usuario pueda ser agregado a la base de datos."""
         with self.client:
             response = self.client.post(
             '/users',
@@ -40,12 +40,12 @@ class TestUserService(BaseTestCase):
         )
         data = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 201)
-        self.assertIn('alexsanchez@upeu.edu.pe was added!', data['message'])
+        self.assertIn('alexsanchez@upeu.edu.pe ha sido agregado!', data['message'])
         self.assertIn('success', data['status'])
 
 
     def test_add_user_invalid_json(self):
-        """Ensure error is thrown if the JSON object is empty."""
+        """Asegurando de que se produce un error si el objeto JSON está vacío."""
         with self.client:
             response = self.client.post(
                 '/users',
@@ -54,11 +54,11 @@ class TestUserService(BaseTestCase):
                 )
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 400)
-            self.assertIn('Invalid payload.', data['message'])
+            self.assertIn('Carga invalida.', data['message'])
             self.assertIn('fail', data['status'])
 
     def test_add_user_invalid_json_keys(self):
-        """Ensure error is thrown if the JSON object does not have a username key."""
+        """Asegurando de que se produce un error si el objeto JSON no tiene una clave de nombre de usuario."""
         with self.client:
             response = self.client.post(
             '/users',
@@ -71,7 +71,7 @@ class TestUserService(BaseTestCase):
         self.assertIn('fail', data['status'])
 
     def test_add_user_duplicate_email(self):
-        """Ensure error is thrown if the email already exists."""
+        """Asegúrate de que se produce un error si el correo electrónico ya existe."""
         with self.client:
             self.client.post(
             '/users',
@@ -108,7 +108,7 @@ class TestUserService(BaseTestCase):
 
 
     def test_single_user_no_id(self):
-        """Asegúrese de que se arroje un error si no se proporciona una identificación."""
+        """Asegurando de que se arroje un error si no se proporciona una identificación."""
         with self.client:
             response = self.client.get('/users/blah')
             data = json.loads(response.data.decode())
@@ -143,15 +143,15 @@ class TestUserService(BaseTestCase):
             self.assertIn('success', data['status'])
 
     def test_main_no_users(self):
-        """Ensure the main route behaves correctly when no users have beenadded to the database."""
+        """Asegurando de que la ruta principal se comporte correctamente cuando no se haya agregado ningún usuario a la base de datos."""
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Todos los usuarios', response.data)
         self.assertIn(b'<p>No users!</p>', response.data)
 
     def test_main_with_users(self):
-        """Ensure the main route behaves correctly when users have been
-        added to the database."""
+        """Asegúrese de que la ruta principal se comporta correctamente cuando los usuarios han sido
+        añadido a la base de datos."""
         add_user('alex', 'alexsanchez@upeu.edu.pe')
         add_user('ender', 'endersanchez@upeu.edu.pe')
         with self.client:
