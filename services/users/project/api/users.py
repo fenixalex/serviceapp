@@ -1,7 +1,7 @@
 # services/users/project/api/users.py
 
 
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, request, render_template, redirect
 
 from project.api.models import User
 from project import db
@@ -24,7 +24,7 @@ def add_user():
     post_data = request.get_json()
     response_object = {
         'status': 'fail',
-        'message': 'Invalid payload.'
+        'message': 'Carga invalida.'
     }
     if not post_data:
         return jsonify(response_object), 400
@@ -36,7 +36,7 @@ def add_user():
             db.session.add(User(username=username, email=email))
             db.session.commit()
             response_object['status'] = 'success'
-            response_object['message'] = f'{email} was added!'
+            response_object['message'] = f'{email} ha sido agregado!'
             return jsonify(response_object), 201
         else:
             response_object['message'] = 'Sorry. That email already exists.'
@@ -92,3 +92,37 @@ def index():
         db.session.commit()
     users = User.query.all()
     return render_template('index.html', users=users)
+
+@users_blueprint.route('/users/<int:id>', methods=['PUT'])
+def update(id):
+        user = User.query.get_or_404(id)
+        user.import_data(request.json)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify({})
+
+@users_blueprint.route('/users/<int:id>', methods=['DELETE'])
+def delete(id):
+        user = User.query.get_or_404(id)
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({})
+
+@users_blueprint.route('/user', methods=['POST'])
+def editar():
+    if request.method == 'POST':
+        iduser = request.form['iduser']
+        user = User.query.get(iduser)
+        user.username = request.form['username']
+        user.email = request.form['email']
+        db.session.commit()
+    return redirect('/')
+
+@users_blueprint.route('/delete', methods=['POST'])
+def eliminar():
+    if request.method == 'POST':
+        iduser = request.form['iduser']
+        user = User.query.get(iduser)
+        db.session.delete(user)
+        db.session.commit()
+    return redirect('/')
