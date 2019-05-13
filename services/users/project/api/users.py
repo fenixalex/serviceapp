@@ -19,6 +19,7 @@ def ping_pong():
         'message': 'pong!'
     })
 
+
 @users_blueprint.route('/users', methods=['POST'])
 def add_user():
     post_data = request.get_json()
@@ -83,6 +84,7 @@ def get_all_users():
     }
     return jsonify(response_object), 200
 
+
 @users_blueprint.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -93,20 +95,23 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
+
 @users_blueprint.route('/users/<int:id>', methods=['PUT'])
 def update(id):
-        user = User.query.get_or_404(id)
-        user.import_data(request.json)
-        db.session.add(user)
-        db.session.commit()
-        return jsonify({})
+    user = User.query.get_or_404(id)
+    user.import_data(request.json)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({})
+
 
 @users_blueprint.route('/users/<int:id>', methods=['DELETE'])
 def delete(id):
-        user = User.query.get_or_404(id)
-        db.session.delete(user)
-        db.session.commit()
-        return jsonify({})
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({})
+
 
 @users_blueprint.route('/user', methods=['POST'])
 def editar():
@@ -117,6 +122,7 @@ def editar():
         user.email = request.form['email']
         db.session.commit()
     return redirect('/')
+
 
 @users_blueprint.route('/delete', methods=['POST'])
 def eliminar():
