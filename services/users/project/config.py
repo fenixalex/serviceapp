@@ -9,14 +9,14 @@ class BaseConfig:
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # new
     SECRET_KEY = 'my_secretkey'  # new
-    DEBUG_TB_ENABLED = False
-    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    DEBUG_TB_ENABLED = False  # configurando debug toolbar
+    DEBUG_TB_INTERCEPT_REDIRECTS = False  # configurando debug toolbar
 
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')  # new
-    DEBUG_TB_ENABLED = True
+    DEBUG_TB_ENABLED = True  # configurando debug toolbar
 
 
 class TestingConfig(BaseConfig):
