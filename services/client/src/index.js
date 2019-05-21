@@ -2,6 +2,7 @@ import React, { Component } from 'react';  // new
 import ReactDOM from 'react-dom';
 import axios from 'axios';  // new
 import UsersList from './components/UsersList';
+import AddUser from './components/AddUser';
 
 
 // new
