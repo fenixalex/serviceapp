@@ -8,9 +8,10 @@ const AddUser = (props) => {
           name="username"
           className="input is-large"
           type="text"
-          placeholder="Enter a username"
+          placeholder="Ingrese un nombre de usuario"
           required
           value={props.username}  // nuevo
+          onChange={props.handleChange}
         />
       </div>
       <div className="field">
@@ -18,14 +19,15 @@ const AddUser = (props) => {
           name="email"
           className="input is-large"
           type="email"
-          placeholder="Enter an email address"
+          placeholder="Ingrese una direccion de email"
           required
           value={props.email}  // nuevo
+          onChange={props.handleChange}
         />
       </div>
       <input
         type="submit"
-        className="button is-primary is-large is-fullwidth"
+        className="button is-danger is-rounded is-fullwidth"
         value="Submit"
       />
     </form>
