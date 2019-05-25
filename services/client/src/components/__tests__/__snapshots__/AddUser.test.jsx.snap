@@ -10,7 +10,7 @@ exports[`AddUser renders a snapshot properly 1`] = `
     <input
       className="input is-large"
       name="username"
-      placeholder="Enter a username"
+      placeholder="Ingrese un nombre de usuario"
       required={true}
       type="text"
     />
@@ -21,13 +21,13 @@ exports[`AddUser renders a snapshot properly 1`] = `
     <input
       className="input is-large"
       name="email"
-      placeholder="Enter an email address"
+      placeholder="Ingrese una direccion de email"
       required={true}
       type="email"
     />
   </div>
   <input
-    className="button is-primary is-large is-fullwidth"
+    className="button is-danger is-rounded is-fullwidth"
     type="submit"
     value="Submit"
   />
