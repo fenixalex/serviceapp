@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension  # configurando
 from flask_cors import CORS  # new
 from flask_migrate import Migrate  # new
+from flask_bcrypt import Bcrypt  # new
 # debug toolbar
 
 # instantiate the db
@@ -15,6 +16,7 @@ db = SQLAlchemy()
 toolbar = DebugToolbarExtension()  # configurando la extencion debug toolbar
 cors = CORS()  # new
 migrate = Migrate()  # new
+bcrypt = Bcrypt()  # new
 
 
 # new
@@ -32,6 +34,7 @@ def create_app(script_info=None):
     toolbar.init_app(app)  # new #configurando la extencion debug toolbar
     cors.init_app(app)  # new
     migrate.init_app(app, db)  # new
+    bcrypt.init_app(app)  # new
 
     # register blueprints
     from project.api.users import users_blueprint

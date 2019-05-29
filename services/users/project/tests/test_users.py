@@ -26,7 +26,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'alex',
-                    'email': 'alexsanchez@upeu.edu.pe'
+                    'email': 'alexsanchez@upeu.edu.pe',
+                    'password': 'greaterthaneight'
                 }),
                 content_type='application/json',
             )
@@ -58,7 +59,8 @@ class TestUserService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/users',
-                data=json.dumps({'email': 'alexsanchez@upeu.edu.pe'}),
+                data=json.dumps({'email': 'alexsanchez@upeu.edu.pe',
+                                 'password': 'greaterthaneight'}),
                 content_type='application/json',
                 )
             data = json.loads(response.data.decode())
@@ -74,7 +76,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'alex',
-                    'email': 'alexsanchez@upeu.edu.pe'
+                    'email': 'alexsanchez@upeu.edu.pe',
+                    'password': 'greaterthaneight'
                     }),
                 content_type='application/json',
                 )
@@ -82,7 +85,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'alex',
-                    'email': 'alexsanchez@upeu.edu.pe'
+                    'email': 'alexsanchez@upeu.edu.pe',
+                    'password': 'greaterthaneight'
                     }),
                 content_type='application/json',
                 )
@@ -95,7 +99,7 @@ class TestUserService(BaseTestCase):
     def test_single_user(self):
         """Asegurando de que el usuario individual se comporte
         correctamente."""
-        user = add_user('alex', 'alexsanchez@upeu.edu.pe')
+        user = add_user('alex', 'alexsanchez@upeu.edu.pe', 'greaterthaneight')
         with self.client:
             response = self.client.get(f'/users/{user.id}')
             data = json.loads(response.data.decode())
@@ -126,8 +130,8 @@ class TestUserService(BaseTestCase):
 
     def test_all_users(self):
         """Asegurando de que todos los usuarios se comporten correctamente."""
-        add_user('alex', 'alexsanchez@upeu.edu.pe')
-        add_user('ender', 'endersanchez@upeu.edu.pe')
+        add_user('alex', 'alexsanchez@upeu.edu.pe', 'greaterthaneight')
+        add_user('ender', 'endersanchez@upeu.edu.pe', 'greaterthaneight')
         with self.client:
             response = self.client.get('/users')
             data = json.loads(response.data.decode())
@@ -155,8 +159,8 @@ class TestUserService(BaseTestCase):
         """Asegúrese de que la ruta principal se
         comporta correctamente cuando los usuarios han sido
         añadido a la base de datos."""
-        add_user('alex', 'alexsanchez@upeu.edu.pe')
-        add_user('ender', 'endersanchez@upeu.edu.pe')
+        add_user('alex', 'alexsanchez@upeu.edu.pe', 'greaterthaneight')
+        add_user('ender', 'endersanchez@upeu.edu.pe', 'greaterthaneight')
         with self.client:
             response = self.client.get('/')
             self.assertEqual(response.status_code, 200)
@@ -171,7 +175,8 @@ class TestUserService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/',
-                data=dict(username='alex', email='alexsanchez@upeu.edu.pe'),
+                data=dict(username='alex', email='alexsanchez@upeu.edu.pe',
+                          password='greaterthaneight'),
                 follow_redirects=True
                 )
             self.assertEqual(response.status_code, 200)
